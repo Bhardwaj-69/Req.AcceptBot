@@ -5,7 +5,6 @@ from motor.motor_asyncio import AsyncIOMotorClient
 import asyncio, datetime, time
 from os import environ as env
 
-
 # --- Constants ---
 
 ACCEPTED_TEXT = "Hey {user}\n\nYour Request For {chat} Is Accepted ✅"
@@ -16,20 +15,17 @@ REQUIRED_KEYWORDS = ["@LarvaLinks", "@PiratesHunts_Bot", "@MovieWalaChat"]
 CHANNEL_ID = -1002557174306
 ADMIN_ID = 8094066652
 
-
 # --- Environment Setup ---
 API_ID = int(env.get('API_ID', 26292638))
 API_HASH = env.get('API_HASH', "2201865f0e468725d3b9e0f54b090f0f")
 BOT_TOKEN = env.get('BOT_TOKEN', "7828770858:AAH78_btTyPNvRb6rESFKQT6Br0QT4Esh6w")
 DB_URL = env.get('DB_URL', "mongodb+srv://Bhardwaj:7vVHr6zrvpsMsU3@cluster0.p2smf.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 
-
 # --- DB and Bot ---
 Dbclient = AsyncIOMotorClient(DB_URL)
 Cluster = Dbclient['Cluster0']
 Data = Cluster['users']
 Bot = Client(name='AutoAcceptBot', api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
-
 
 # --- Periodic Bio Validator ---
 async def validate_users():
@@ -44,10 +40,10 @@ async def validate_users():
             if not any(k.lower() in bio.lower() for k in REQUIRED_KEYWORDS):
                 print(f"Kicking user {user_id} for missing keywords")
                 await Bot.send_message(
-                        user_id,
-                        "You have been removed from the channel due to missing required keywords in your bio.\n\nPlease update your bio with any of the following and try again:\n" +
-                        "\n".join(REQUIRED_KEYWORDS)
-                    )
+                    user_id,
+                    "You have been removed from the channel due to missing required keywords in your bio.\n\nPlease update your bio with any of the following and try again:\n" +
+                    "\n".join(REQUIRED_KEYWORDS)
+                )
                 await Bot.ban_chat_member(CHANNEL_ID, user_id)
                 await Bot.unban_chat_member(CHANNEL_ID, user_id)
                 await Data.delete_one({'id': user_id})
@@ -57,14 +53,12 @@ async def validate_users():
         except Exception as e:
             print(f"Error checking user {user_id}: {e}")
 
-
 # --- Periodic Task ---
 async def periodic_check():
     while True:
         print("Running bio validation...")
         await validate_users()
         await asyncio.sleep(60)
-
 
 # --- Command Handlers ---
 @Bot.on_message(filters.command("start") & filters.private)
@@ -77,7 +71,6 @@ async def start_handler(c, m):
         InlineKeyboardButton('Support🔆', url='https://t.me/MovieWalaChat')
     ]]
     await m.reply_text(text=START_TEXT.format(m.from_user.mention), disable_web_page_preview=True, reply_markup=InlineKeyboardMarkup(button))
-
 
 @Bot.on_message(filters.command(["broadcast", "users"]) & filters.user(ADMIN_ID))
 async def broadcast(c, m):
@@ -111,7 +104,6 @@ async def broadcast(c, m):
     await sts.delete()
     await m.reply_text(f"Broadcast Done in {time_taken}.\nTotal: {total_users}\nSuccess: {success}\nFailed: {failed}")
 
-
 # --- Join Request Handler ---
 @Bot.on_chat_join_request()
 async def join_request(c, m):
@@ -132,15 +124,17 @@ async def join_request(c, m):
     except Exception as e:
         print(f"Join request error for {user_id}: {e}")
 
-
-# --- Start Bot ---
+# --- Manual Check Handler ---
 @Bot.on_message(filters.command("runcheck") & filters.user(ADMIN_ID))
 async def manual_check(_, __):
     await validate_users()
     print("Manual check completed.")
 
+# --- Fix for Koyeb: msg_id too low ---
+from pyrogram.session.session import Session
+Session._start_time = int(time.time())
 
-# --- Entry ---
+# --- Start Bot ---
 Bot.start()
 asyncio.get_event_loop().create_task(periodic_check())
 print("Bot running... Made By PiratesHunts")
