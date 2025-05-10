@@ -11,17 +11,17 @@ from os import environ as env
 ACCEPTED_TEXT = "Hey {user}\n\nYour Request For {chat} Is Accepted ✅"
 R_TEXT = "Hey {user}\n\nYour Request For {chat} Is Ejected"
 START_TEXT = "Hai {}\n\nI am Auto Request Accept Bot With Working For All Channel. Add Me In Your Channel To Use"
-REQUIRED_KEYWORDS = ["@channel_name", "@another_channel", "@example"]
+REQUIRED_KEYWORDS = ["@LarvaLinks", "@PiratesHunts_Bot", "@MovieWalaChat"]
 
-CHANNEL_ID = -1002573817824
-ADMIN_ID = 7932471669
+CHANNEL_ID = -1002557174306
+ADMIN_ID = 8094066652
 
 
 # --- Environment Setup ---
-API_ID = int(env.get('API_ID', ))
-API_HASH = env.get('API_HASH', "")
-BOT_TOKEN = env.get('BOT_TOKEN', "")
-DB_URL = env.get('DB_URL', "")
+API_ID = int(env.get('API_ID', 26292638))
+API_HASH = env.get('API_HASH', "2201865f0e468725d3b9e0f54b090f0f")
+BOT_TOKEN = env.get('BOT_TOKEN', "7828770858:AAH78_btTyPNvRb6rESFKQT6Br0QT4Esh6w")
+DB_URL = env.get('DB_URL', "mongodb+srv://Bhardwaj:7vVHr6zrvpsMsU3@cluster0.p2smf.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 
 
 # --- DB and Bot ---
@@ -73,8 +73,8 @@ async def start_handler(c, m):
     if not await Data.find_one({'id': user_id}):
         await Data.insert_one({'id': user_id})
     button = [[
-        InlineKeyboardButton('Updates', url='https://t.me/mkn_bots_updates'),
-        InlineKeyboardButton('Support', url='https://t.me/MKN_BOTZ_DISCUSSION_GROUP')
+        InlineKeyboardButton('Movie Provider🤞', url='https://t.me/PiratesHunts_Bot'),
+        InlineKeyboardButton('Support🔆', url='https://t.me/MovieWalaChat')
     ]]
     await m.reply_text(text=START_TEXT.format(m.from_user.mention), disable_web_page_preview=True, reply_markup=InlineKeyboardMarkup(button))
 
@@ -143,6 +143,6 @@ async def manual_check(_, __):
 # --- Entry ---
 Bot.start()
 asyncio.get_event_loop().create_task(periodic_check())
-print("Bot running... Made By PS")
+print("Bot running... Made By PiratesHunts")
 idle()
 Bot.stop()
