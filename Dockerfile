@@ -15,4 +15,4 @@ COPY . .
 ENV PYTHONUNBUFFERED 1
 
 # Command to run both Flask app and Telegram bot
-CMD ["sh", "-c", "gunicorn app:app & python3 bot.py"]
+CMD ["bash", "-c", "gunicorn app:app & python3 bot.py"]
