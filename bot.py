@@ -58,7 +58,7 @@ async def periodic_check():
     while True:
         print("Running bio validation...")
         await validate_users()
-        await asyncio.sleep(60)
+        await asyncio.sleep(120)
 
 # --- Command Handlers ---
 @Bot.on_message(filters.command("start") & filters.private)
