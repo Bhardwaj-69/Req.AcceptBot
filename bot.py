@@ -9,7 +9,7 @@ from os import environ as env
 
 ACCEPTED_TEXT = "<b><blockquote>🧤Ahhoyy! Pirate {user}\n\n🔆Your Request For {chat} Is Accepted ✅</blockquote>\n\n<blockquote>💢Dont Remove @LarvaLinks From your Bio❗\n⭕you will Instently Remove</blockquote> \n\n🧪 Join @PvtCourses As Backup and Updates🏝\n🎃all Movies and Series :-🔻 @PiratesHunts_Bot </b>"
 R_TEXT = "<b>Ahhoyy! Pirate{user}❗\n\n🧬Your Request For {chat} Is Rejected💢❗\n\n🔆add @LarvaLinks in Your Telegram Acc.s Bio\n⭕Then Send Join Req.🤞\n\n🔻https://t.me/+jsWo_8PgIf1lZmNl</b>"
-START_TEXT = "<b>🧤Ahhoyy! Pirate {}\n\n<blockquote>🏝🧪I will Auto Accept your Join Req. to a Private Channel\n⚡in that Channel you can Access All Premium Courses FREE💢</blockquote>\n\n<blockquote>⚜to Join that Channel👻\n🃏Set any one Tag in our BIO. @LarvaLinks or @PiratesHunts @PvtCourses\n❄then Send join Req. Again\n🧬your Req. will be Accepted Instently⚡</blockquote>\n\n🗿https://t.me/+jsWo_8PgIf1lZmNl<b>"
+START_TEXT = "<b>🧤Ahhoyy! Pirate {}\n\n<blockquote>🧪I will Auto Accept your Join Req. to a Private Channel\n⚡in that Channel you can Access All Premium Courses FREE💢</blockquote>\n\n<blockquote>⚜to Join that Channel👻\n🃏Set any one Tag in our BIO. @LarvaLinks or @PiratesHunts_Bot @PvtCourses\n❄then Send join Req. Again\n🧬your Req. will be Accepted Instently⚡</blockquote>\n\n🗿Send Join Req.🔆t.me/+jsWo_8PgIf1lZmNl</b>"
 REQUIRED_KEYWORDS = ["@LarvaLinks", "@PiratesHunts_Bot", "@PvtCourses"]
 
 CHANNEL_ID = -1002671651169
@@ -41,7 +41,7 @@ async def validate_users():
                 print(f"Kicking user {user_id} for missing keywords")
                 await Bot.send_message(
                     user_id,
-                    "<b>🧤Ahhoyy! Pirate\n\nYou have been ❗REMOVED🚫 from the Channel \n\n💢Because you Removed Tag from your BIO.\n\n💢https://t.me/+jsWo_8PgIf1lZmNl\n\n🌟Want to Join Again..?\n🔆Just anyOne TaG in your BIO and Send Join Req. Again🤞:\n" +
+                    "<b>🧤Ahhoyy! Pirate\n\nYou have been ❗REMOVED🚫 from the Channel \n\n💢Because you Removed Tag from your BIO.\n\n💢https://t.me/+jsWo_8PgIf1lZmNl\n\n🌟Want to Join Again..?\n🔆Just anyOne TaG in your BIO and Send Join Req. Again🤞</b>:\n" +
                     "\n".join(REQUIRED_KEYWORDS)
                 )
                 await Bot.ban_chat_member(CHANNEL_ID, user_id)
