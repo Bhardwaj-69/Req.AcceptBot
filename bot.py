@@ -7,12 +7,12 @@ from os import environ as env
 
 # --- Constants ---
 
-ACCEPTED_TEXT = "Hey {user}\n\nYour Request For {chat} Is Accepted ✅"
-R_TEXT = "Hey {user}\n\nYour Request For {chat} Is Ejected"
-START_TEXT = "Hai {}\n\nI am Auto Request Accept Bot With Working For All Channel. Add Me In Your Channel To Use"
-REQUIRED_KEYWORDS = ["@LarvaLinks", "@PiratesHunts_Bot", "@MovieWalaChat"]
+ACCEPTED_TEXT = "<b><blockquote>🧤Ahhoyy! Pirate {user}\n\n🔆Your Request For {chat} Is Accepted ✅</blockquote>\n\n<blockquote>💢Dont Remove @LarvaLinks From your Bio❗\n⭕you will Instently Remove</blockquote> \n\n🧪 Join @PvtCourses As Backup and Updates🏝\n🎃all Movies and Series :-🔻 @PiratesHunts_Bot </b>"
+R_TEXT = "<b>Ahhoyy! Pirate{user}❗\n\n🧬Your Request For {chat} Is Rejected💢❗\n\n🔆add @LarvaLinks in Your Telegram Acc.s Bio\n⭕Then Send Join Req.🤞\n\n🔻https://t.me/+jsWo_8PgIf1lZmNl</b>"
+START_TEXT = "<b>🧤Ahhoyy! Pirate {}\n\n<blockquote>🏝🧪I will Auto Accept your Join Req. to a Private Channel\n⚡in that Channel you can Access All Premium Courses FREE💢</blockquote>\n\n<blockquote>⚜to Join that Channel👻\n🃏Set any one Tag in our BIO. @LarvaLinks or @PiratesHunts @PvtCourses\n❄then Send join Req. Again\n🧬your Req. will be Accepted Instently⚡</blockquote>\n\n🗿https://t.me/+jsWo_8PgIf1lZmNl<b>"
+REQUIRED_KEYWORDS = ["@LarvaLinks", "@PiratesHunts_Bot", "@PvtCourses"]
 
-CHANNEL_ID = -1002557174306
+CHANNEL_ID = -1002671651169
 ADMIN_ID = 8094066652
 
 # --- Environment Setup ---
@@ -41,7 +41,7 @@ async def validate_users():
                 print(f"Kicking user {user_id} for missing keywords")
                 await Bot.send_message(
                     user_id,
-                    "You have been removed from the channel due to missing required keywords in your bio.\n\nPlease update your bio with any of the following and try again:\n" +
+                    "<b>🧤Ahhoyy! Pirate\n\nYou have been ❗REMOVED🚫 from the Channel \n\n💢Because you Removed Tag from your BIO.\n\n💢https://t.me/+jsWo_8PgIf1lZmNl\n\n🌟Want to Join Again..?\n🔆Just anyOne TaG in your BIO and Send Join Req. Again🤞:\n" +
                     "\n".join(REQUIRED_KEYWORDS)
                 )
                 await Bot.ban_chat_member(CHANNEL_ID, user_id)
@@ -67,8 +67,8 @@ async def start_handler(c, m):
     if not await Data.find_one({'id': user_id}):
         await Data.insert_one({'id': user_id})
     button = [[
-        InlineKeyboardButton('Movie Provider🤞', url='https://t.me/PiratesHunts_Bot'),
-        InlineKeyboardButton('Support🔆', url='https://t.me/MovieWalaChat')
+        InlineKeyboardButton('🧪Movie Provider🤞', url='https://t.me/PiratesHunts_Bot'),
+        InlineKeyboardButton('🧤Backup Course', url='https://t.me/PvtCourses')
     ]]
     await m.reply_text(text=START_TEXT.format(m.from_user.mention), disable_web_page_preview=True, reply_markup=InlineKeyboardMarkup(button))
 
@@ -78,7 +78,7 @@ async def broadcast(c, m):
         total_users = await Data.count_documents({})
         return await m.reply(f"Total Users: {total_users}")
     b_msg = m.reply_to_message
-    sts = await m.reply_text("Broadcasting your messages...")
+    sts = await m.reply_text("Broadcasting your messages...👻")
     users = Data.find({})
     total_users = await Data.count_documents({})
     done = success = failed = 0
@@ -137,6 +137,6 @@ Session._start_time = int(time.time())
 # --- Start Bot ---
 Bot.start()
 asyncio.get_event_loop().create_task(periodic_check())
-print("Bot running... Made By PiratesHunts")
+print("Bot running... Made By PiratesHunts💀")
 idle()
 Bot.stop()
